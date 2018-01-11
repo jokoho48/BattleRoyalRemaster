@@ -17,13 +17,6 @@ params ["_building"];
 _building setVariable [QGVAR(isSpawned), false];
 private _holders = _building getVariable [QGVAR(Holders), []];
 private _kits = [];
-#ifdef ISDEV
-    private _mrks = _building getVariable [QGVAR(debugMarker), []];
-    {
-        deleteMarker _x;
-        nil
-    } count _mrks;
-#endif
 
 {
     private _weapons = (weaponCargo _x) call FUNC(compressKitArray);
@@ -37,3 +30,11 @@ private _kits = [];
     nil
 } count _holders;
 _building setVariable [QGVAR(KitData), _kits];
+
+#ifdef ISDEV
+    private _mrks = _building getVariable [QGVAR(debugMarker), []];
+    {
+        deleteMarker _x;
+        nil
+    } count _mrks;
+#endif
