@@ -22,15 +22,8 @@ if (isNil "_kits") then {
     _kits =_building call FUNC(genereateKits);
 };
 private _holders = [];
-#ifdef ISDEV
-    private _mrks = [];
-#endif
 
-#ifdef ISDEV
-    #define CREATEDEBUGMARKER private _mrk = [_pos, nil, nil, nil, str _kit] call MFUNC(createDebugMarker); _mrks pushBack _mrk;
-#else
-    #define CREATEDEBUGMARKER /*disalbed*/
-#endif
+DEFMARKERSARRAY;
 
 {
     _x params ["_posData", "_kit"];
@@ -73,7 +66,7 @@ private _holders = [];
     nil
 } count _kits;
 
+_building setVariable [QGVAR(Holders), _holders];
 #ifdef ISDEV
     _building setVariable [QGVAR(debugMarker), _mrks];
 #endif
-_building setVariable [QGVAR(Holders), _holders];
