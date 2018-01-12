@@ -17,7 +17,6 @@ params ["_unit", "_state"];
 
 ["unconsciousnessChanged", _this] call CFUNC(localEvent);
 
-
 if (_state) then {
     if (units _unit isEqualTo [_unit]) exitWith {
         ["playerKilled", [_unit, _instigator]] call CFUNC(serverEvent);
@@ -30,7 +29,7 @@ if (_state) then {
     _unit setVariable [QGVAR(isUnconscious), true, true];
     private _currentWeapon = currentWeapon _unit;
     if (_currentWeapon == "") then { _currentWeapon = " "; };
-    private _anim = ""
+    private _anim = "";
     switch (_currentWeapon) do {
         case (primaryWeapon _unit): {
             _anim = "amovppnemstpsraswrfldnon";
@@ -48,5 +47,5 @@ if (_state) then {
     [_unit, _anim, 3] call CFUNC(doAnimation);
 } else {
     _unit setAnimSpeedCoef 1;
-    _unit setVariable [QGVAR(isUnconscious), false, true]);
+    _unit setVariable [QGVAR(isUnconscious), false, true];
 };

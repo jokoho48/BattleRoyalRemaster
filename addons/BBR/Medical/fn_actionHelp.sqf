@@ -30,7 +30,7 @@ GVAR(helpStartTime) = -1;
 GVAR(helpDuration) = 6;
 
 private _onStart = {
-    params ["_target", "_caller"];
+    params ["_target"];
 
     _target setVariable [QGVAR(medicalAction), "HELP", true];
     GVAR(helpStartTime) = time;
@@ -43,7 +43,7 @@ private _onProgress = {
 };
 
 private _onComplete = {
-    params ["_target", "_caller"];
+    params ["_target"];
 
     _target setVariable [QGVAR(medicalAction), "", true];
 
@@ -54,7 +54,7 @@ private _onComplete = {
 };
 
 private _onInterruption = {
-    params ["_target", "_caller"];
+    params ["_target"];
 
     _target setVariable [QGVAR(medicalAction), "", true];
     GVAR(helpStartTime) = -1;

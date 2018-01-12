@@ -15,10 +15,10 @@
 */
 params ["_unit", "_selectionName", "_damage", "_source", "_projectile", "_hitPartIndex", "_instigator"];
 if !((local _unit) && (alive _unit)) exitWith {};
-
+private _damageReceived = _damage;
 if (_hitPartIndex >= 0) then {
     private _lastDamage = _unit getHit _selectionName;
-    private _damageReceived = (_damage - _lastDamage) max 0;
+    _damageReceived = (_damage - _lastDamage) max 0;
     [_damageReceived] call FUNC(bloodEffect);
     GVAR(Threshold) = GVAR(Threshold) + _damageReceived;
 } else {
