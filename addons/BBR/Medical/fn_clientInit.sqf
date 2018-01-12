@@ -35,7 +35,7 @@
     if ((stance _unit) in ["CROUCH", "STAND"]) then {
         private _currentWeapon = currentWeapon _unit;
         if (_currentWeapon == "") then { _currentWeapon = " "; };
-        private _anim = ""
+        private _anim = "";
         switch (_currentWeapon) do {
             case (primaryWeapon _unit): {
                 _anim = "amovppnemstpsraswrfldnon";
