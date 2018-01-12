@@ -27,7 +27,7 @@ private _condition = {
      && ((CLib_Player getVariable [QGVAR(medicalAction), ""]) == "")
 };
 GVAR(helpStartTime) = -1;
-GVAR(helpDuration) = 6
+GVAR(helpDuration) = 6;
 
 private _onStart = {
     params ["_target", "_caller"];

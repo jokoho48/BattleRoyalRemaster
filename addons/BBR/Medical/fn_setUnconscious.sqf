@@ -27,7 +27,7 @@ if (_state) then {
         _this setUnconscious false;
     }, 2, _unit] call CFUNC(wait);
     _unit setAnimSpeedCoef 0.7;
-    _unit setVariable [QGVAR(isUnconscious), true, true]);
+    _unit setVariable [QGVAR(isUnconscious), true, true];
     private _currentWeapon = currentWeapon _unit;
     if (_currentWeapon == "") then { _currentWeapon = " "; };
     private _anim = ""
