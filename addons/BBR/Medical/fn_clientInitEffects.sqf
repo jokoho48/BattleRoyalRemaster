@@ -34,7 +34,7 @@ GVAR(rBlur) ppEffectCommit 0;
 GVAR(rBlur) ppEffectEnable true;
 
 [{
-    call FUNC(handleBlur);
+    call FUNC(handlePP);
 }, 0.5] call CFUNC(addPerFrameHandler);
 
 ["unconsciousnessChanged", {
