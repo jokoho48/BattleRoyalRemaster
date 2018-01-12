@@ -16,7 +16,20 @@ class CfgCLibModules {
             FNC(removeKit);
             FNC(serverInit);
         };
+        MODULE(Medical) {
+            dependency[] = {"BBR/Common"};
+            FNC(actionHeal);
+            FNC(actionHelp);
+            FNC(bloodEffect);
+            FNC(clientInit);
+            FNC(clientInitEffects);
+            FNC(handleDamage);
+            FNC(handlePP);
+            FNC(init);
+            FNC(setUnconscious);
+        };
         MODULE(SimpleInteraction) {
+            dependency[] = {"BBR/Common"};
             FNC(checkHouse);
             FNC(checkWeaponHolder);
             FNC(clientInit);
