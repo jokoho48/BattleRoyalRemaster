@@ -6,6 +6,7 @@ class CfgCLibModules {
         dependency[] = {"CLib"};
         MODULE(Common) {
             FNC(arrayInArea);
+            FNC(attachmentType);
             FNC(clientInitAreaBuildingSystem);
             FNC(getWeaponType);
             FNC(init);

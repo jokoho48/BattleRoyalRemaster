@@ -24,7 +24,19 @@ switch (toLower _type) do {
     case ("item"): {
         [{
             params ["_items", "_target"];
+
             clearItemCargoGlobal _target;
+            private _notAddedItems = [];
+
+            private _fnc_addItem = {
+                params ["_item"];
+                if (CLib_Player canAdd _item) then {
+                    CLib_Player addItem _item;
+                } else {
+                    _notAddedItems pushback _item;
+                };
+            };
+
             {
                 private _item = _x;
                 if (getNumber(configFile >> "CfgWeapons" >> _item >> "itemInfo" >> "type") in [101, 201, 301, 302]) then {
@@ -33,35 +45,51 @@ switch (toLower _type) do {
                         if (toLower (_item) in ((_x call BIS_fnc_compatibleItems) apply {toLower _x})) then {
                             switch (_forEachIndex) do {
                                 case (0): {
-                                    Clib_Player addPrimaryWeaponItem _item;
+                                    if (((primaryWeaponItems CLib_Player) select (_item call MFUNC(attachmentType)) == "")) then {
+                                        Clib_Player addPrimaryWeaponItem _item;
+                                    } else {
+                                        _item call _fnc_addItem;
+                                    };
                                     breakOut "_fnc_addItemLoop";
                                 };
                                 case (1): {
-                                    Clib_Player addSecondaryWeaponItem _item;
+                                    if (((secondaryWeaponItems CLib_Player) select (_item call MFUNC(attachmentType)) == "")) then {
+                                        Clib_Player addSecondaryWeaponItem _item;
+                                    } else {
+                                        _item call _fnc_addItem;
+                                    };
                                     breakOut "_fnc_addItemLoop";
                                 };
                                 case (2): {
-                                    Clib_Player addHandGunItem _item;
+                                    if (((handgunItems CLib_Player) select (_item call MFUNC(attachmentType)) == "")) then {
+                                        Clib_Player addHandgunItem _item;
+                                    } else {
+                                        _item call _fnc_addItem;
+                                    };
                                     breakOut "_fnc_addItemLoop";
                                 };
                                 default {
-                                    CLib_Player addItem _item;
+                                    _item call _fnc_addItem;
                                     breakOut "_fnc_addItemLoop";
                                 };
                             };
                         } else {
                             if (_forEachIndex == 3) then {
-                                CLib_Player addItem _item;
+                                _item call _fnc_addItem;
                             };
                         };
                         nil
                     } forEach [primaryWeapon CLib_Player, secondaryWeapon CLib_Player, handGunWeapon CLib_Player, ""];
                 } else {
-                    CLib_Player addItem _item;
+                    _item call _fnc_addItem;
                 };
                 nil
             } count _items;
-            player playAction "putdown";
+            CLib_Player playAction "putdown";
+            private _wh = createVehicle ["WeaponHolderSimulated_Scripted", [0,0,0], [], 0, "CAN_COLLIDE"];
+            {
+                _wh addItemCargoGlobal [_x, 1];
+            } count _notAddedItems;
         }, [_item, cursorObject], "takeItem"] call CFUNC(mutex);
     };
     case ("bag"): {
