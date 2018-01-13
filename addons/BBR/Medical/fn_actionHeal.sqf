@@ -22,8 +22,6 @@ private _condition = {
      && !(_target getVariable [QGVAR(isUnconscious), false])
      && (_target distance CLib_Player < 3)
      && (group _target == group CLib_Player)
-     && ((_target getVariable [QGVAR(medicalAction), ""]) == "")
-     && ((CLib_Player getVariable [QGVAR(medicalAction), ""]) == "")
 };
 GVAR(healStartTime) = -1;
 GVAR(healDuration) = 5;
@@ -33,7 +31,7 @@ private _onStart = {
 
     _target setVariable [QGVAR(medicalAction), "HEAL", true];
     GVAR(healStartTime) = time;
-    CLib_Player playAction "medicStart";
+    CLib_Player playActionNow "medicStart";
 };
 
 private _onProgress = {
