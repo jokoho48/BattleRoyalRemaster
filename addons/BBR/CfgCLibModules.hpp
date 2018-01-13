@@ -33,6 +33,7 @@ class CfgCLibModules {
             FNC(checkHouse);
             FNC(checkWeaponHolder);
             FNC(clientInit);
+            FNC(clientInitLadderAction);
             FNC(openDoor);
             FNC(takeItem);
         };

@@ -27,6 +27,7 @@ private _kits = [];
     };
     _x setPos [-1000, -1000, -1000];
     _x setVariable [QGVAR(isLocked), false];
+    _x setVariable  [QCGVAR(noClean), false, true]; // Allowed to get Cleaned if obj is not needed anymore
     nil
 } count _holders;
 _building setVariable [QGVAR(KitData), _kits];

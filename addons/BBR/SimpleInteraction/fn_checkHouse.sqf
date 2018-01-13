@@ -19,11 +19,10 @@ private _sPos = positionCameraToWorld [0, 0, 0];
 private _ePos = ([positionCameraToWorld [0, 0, 1], positionCameraToWorld [0, 0, 3.2]] select (cameraView == "Internal"));
 
 private _ints = [];
-scopeName "_fnc_checkHouse";
 {
     _ints = [_target, _x] intersect [_sPos, _ePos];
     if !(_ints isEqualTo []) then {
-        breakTo "_fnc_checkHouse";
+        breakTo SCRIPTSCOPENAME;
     };
     nil
 } count ["VIEW", "GEOM", "FIRE"];

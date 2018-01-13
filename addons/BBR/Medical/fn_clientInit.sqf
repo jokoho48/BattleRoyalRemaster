@@ -13,6 +13,8 @@
     Returns:
     None
 */
+
+GVAR(lastDamageSource) = objNull;
 ["playerChanged", {
     (_this select 0) params ["_newPlayer", "_oldPlayer"];
     private _oldId = _oldPlayer getVariable [QGVAR(HandleDamageId), -1];
