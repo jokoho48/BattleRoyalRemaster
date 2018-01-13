@@ -19,61 +19,62 @@ DFUNC(getLadderActions) = {
     params ["_typeOfBuilding"];
     private _memPoints = GVAR(cachedBuildingTypes) getVariable [_typeOfBuilding, []];
     if !(_memPoints isEqualTo []) exitWith { _memPoints };
-        private _ladders = getArray (configFile >> "CfgVehicles" >> _typeOfBuilding >> "ladders");
-        private _top = [];
-        private _bottom = [];
-        {
-            _x params ["_ladderBottomMemPoint", "_ladderTopMemPoint"];
-            _top pushBack _ladderTopMemPoint;
-            _bottom pushBack _ladderBottomMemPoint;
-        } forEach _ladders;
-        _memPoints = [_top, _bottom];
-        GVAR(cachedBuildingTypes) getVariable [_typeOfBuilding, _memPoints];
-        _memPoints
+    private _ladders = getArray (configFile >> "CfgVehicles" >> _typeOfBuilding >> "ladders");
+    private _top = [];
+    private _bottom = [];
+    {
+        _x params ["_ladderBottomMemPoint", "_ladderTopMemPoint"];
+        _top pushBack _ladderTopMemPoint;
+        _bottom pushBack _ladderBottomMemPoint;
+    } forEach _ladders;
+    _memPoints = [_top, _bottom];
+    GVAR(cachedBuildingTypes) setVariable [_typeOfBuilding, _memPoints];
+    _memPoints
+};
+
+DFUNC(onLadder) = {
+    ((getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState _this) >> "onLadder")) == 1)
 };
 
 DFUNC(ladderContion) = {
     params ["_target", "_player"];
-    ((_target distance _player) < 2) && {((getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState _player) >> "onLadder")) == 0)}
+    ((_target distance _player) < 2) && {!(_this call FUNC(onLadder))}
 };
 
-DFUNC(getUpLadder) = {
-    params ["_building", "_player", "_index"];
-    _player action ["LadderUp", _building, _index, 0];
-};
-
-DFUNC(getDownLadder) = {
-    params ["_building", "_player", "_index"];
-    _player action ["LadderDown", _building, _index, 1];
+DFUNC(getOnLadder) = {
+    params ["_building", "_player", "_index", "_point"];
+    _player action [["LadderDown", "LadderUp"] select _point, _building, _index, _point];
 };
 
 DFUNC(LadderAction) = {
     scopeName QGVAR(LadderAction);
-    private _sPos = positionCameraToWorld [0,0,0];
     private _building = cursorObject;
     if !(_building isKindOf "House") then {
-        _building = _sPos nearestObject "House";
+        _building = (getPos CLib_Player) nearestObject "House";
     };
+    if !(_building isKindOf "House") exitWith {[]};
 
     private _ladderActions = _building getVariable [QGVAR(ladderData), []];
     if (_ladderActions isEqualTo []) then {
         _ladderActions = (typeOf _building) call FUNC(getLadderActions);
         _building setVariable [QGVAR(ladderData), _ladderActions];
     };
-    if !(_ladderActions isEqualTo []) exitWith {[]};
+    if (_ladderActions isEqualTo []) exitWith {[]};
     _ladderActions params ["_top", "_bottom"];
     {
         private _type = _forEachIndex;
         {
-            if (_sPos distance (_building modelToWorld (_building selectionPosition _x)) < 1) then {
-                [[_building, CLib_Player, _forEachIndex], [FUNC(getUpLadder), FUNC(getDownLadder)] select _type] breakOut QGVAR(LadderAction);
+            private _pos = _building modelToWorld (_building selectionPosition _x);
+            DUMP("Ladder " + _x + " Pos" + str _pos);
+            if (CLib_Player distance _pos < 2 && [CLib_Player, _pos, 1] call CFUNC(inFOV)) then {
+                [_building, CLib_Player, _forEachIndex, _type] breakOut QGVAR(LadderAction);
             };
         } forEach _x;
-    } forEach [_top, _bottom];
+    } forEach [_bottom ,_top];
     []
 };
 
-["onCursorObjectChanged", {
+["cursorObjectChanged", {
     (_this select 0) params ["_building"];
     if !(_building isKindOf "House") exitWith {};
     if !(_building getVariable [QGVAR(ladderData), []] isEqualTo []) exitWith {};

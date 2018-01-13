@@ -14,7 +14,7 @@
     None
 */
 params [["_target", cursorObject]];
-if !(_target isKindOf "WeaponHolder") exitWith {[]};
+if !(_target isKindOf "WeaponHolder" || _target isKindOf "WeaponHolderSimulated") exitWith {[]};
 
 // check for backpacks
 {
@@ -39,11 +39,12 @@ if !(_target isKindOf "WeaponHolder") exitWith {[]};
     };
     nil
 } count (weaponCargo _target);
+
 // check for Items
-{
-    [_x, "item"] breakOut SCRIPTSCOPENAME;
-    nil
-} count (itemCargo cursorObject);
+if !((itemCargo _target) isEqualTo []) exitWith {
+    [itemCargo _target, "item"];
+};
+
 {
     [_x, "magazine"] breakOut SCRIPTSCOPENAME;
     nil

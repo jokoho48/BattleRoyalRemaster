@@ -70,7 +70,7 @@ DFUNC(genereateKits) = {
         if !(_lis isEqualTo []) then {
             _pos = (_lis select 0) select 0;
         };
-        _kits pushBack [[_pos, _up], _kit];
+        _kits pushBack [[_pos vectorAdd [0, 0 , 0.01], _up], _kit];
     };
     _building setVariable [QGVAR(KitData), _kits];
     _kits

@@ -22,24 +22,36 @@
         params ["", "_dik", "", "", ""];
         private _ret = false;
         if (_dik == DIK_F) then {
-            private _weaponHolder = cursorObject call FUNC(checkWeaponHolder);
-            DUMP("WeaponHolder Check " + str _weaponHolder);
-            if !(_weaponHolder isEqualTo []) exitWith {
-                _weaponHolder call FUNC(takeItem);
-                _ret = true;
+            private _action = call FUNC(evaluateAction);
+            if (_action isEqualTo []) exitWith {};
+            _ret = true;
+            switch (_action select 0) do {
+                case ("weaponholder"): {
+                    (_action select 1) call FUNC(takeItem);
+                    GVAR(lastUpdate) = diag_frameNo;
+                };
+                case ("door"): {
+                    (_action select 1) call FUNC(openDoor);
+                    GVAR(lastUpdate) = diag_frameNo;
+                };
+                case ("ladder"): {
+                    (_action select 1) call FUNC(getOnLadder);
+                    GVAR(lastUpdate) = diag_frameNo ;
+                };
+                case ("ladderoff"): {
+                    private _building = cursorObject;
+                    if !(_building isKindOf "House") then {
+                        _building = (getPos CLib_Player) nearestObject "House";
+                    };
+                    if (_building isKindOf "House") then {
+                        CLib_Player action ["ladderOff", cursorObject];
+                        GVAR(lastUpdate) = diag_frameNo;
+                    };
+                };
+                default {
+                    _ret = false;
+                };
             };
-            private _houseCheck = call FUNC(checkHouse);
-            DUMP("House Check " + str _houseCheck);
-            if (_houseCheck select 0) exitWith {
-                _ret = true;
-                (_houseCheck select 1) call FUNC(openDoor);
-            };
-            private _ladderAction = call FUNC(LadderAction);
-            DUMP("Ladder Check " + str _ladderAction);
-            if !(_ladderAction isEqualTo []) exitWith {
-                (_ladderAction select 0) call (_ladderAction select 1);
-            };
-
         };
         _ret;
     }];
@@ -69,3 +81,9 @@ DFUNC(getDoorSource) = {
         };
     };
 };
+["cursorObjectChanged", {
+    call FUNC(evaluateAction);
+}] call CFUNC(addEventhandler);
+[{
+    call FUNC(evaluateAction);
+}, 1.3] call CFUNC(addPerFrameHandler);

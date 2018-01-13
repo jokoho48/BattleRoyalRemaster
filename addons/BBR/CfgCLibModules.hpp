@@ -5,6 +5,9 @@ class CfgCLibModules {
         path = "\bbr\BBR\addons\BBR"; // TODO add Simplifyed Macro for this
         dependency[] = {"CLib"};
         MODULE(Common) {
+            FNC(arrayInArea);
+            FNC(clientInitAreaBuildingSystem);
+            FNC(getWeaponType);
             FNC(init);
         };
         MODULE(GearSpawn) {
@@ -34,6 +37,7 @@ class CfgCLibModules {
             FNC(checkWeaponHolder);
             FNC(clientInit);
             FNC(clientInitLadderAction);
+            FNC(evaluateAction);
             FNC(openDoor);
             FNC(takeItem);
         };

@@ -23,27 +23,45 @@ switch (toLower _type) do {
     };
     case ("item"): {
         [{
-            scopeName "_fnc_addItemMutex";
-            params ["_item", "_target"];
-            private _items = itemCargo _target;
-            _items deleteAt (_items find _item);
+            params ["_items", "_target"];
             clearItemCargoGlobal _target;
             {
-                _target addItemCargoGlobal [_x, 1];
+                private _item = _x;
+                if (getNumber(configFile >> "CfgWeapons" >> _item >> "itemInfo" >> "type") in [101, 201, 301, 302]) then {
+                    {
+                        scopeName "_fnc_addItemLoop";
+                        if (toLower (_item) in ((_x call BIS_fnc_compatibleItems) apply {toLower _x})) then {
+                            switch (_forEachIndex) do {
+                                case (0): {
+                                    Clib_Player addPrimaryWeaponItem _item;
+                                    breakOut "_fnc_addItemLoop";
+                                };
+                                case (1): {
+                                    Clib_Player addSecondaryWeaponItem _item;
+                                    breakOut "_fnc_addItemLoop";
+                                };
+                                case (2): {
+                                    Clib_Player addHandGunItem _item;
+                                    breakOut "_fnc_addItemLoop";
+                                };
+                                default {
+                                    CLib_Player addItem _item;
+                                    breakOut "_fnc_addItemLoop";
+                                };
+                            };
+                        } else {
+                            if (_forEachIndex == 3) then {
+                                CLib_Player addItem _item;
+                            };
+                        };
+                        nil
+                    } forEach [primaryWeapon CLib_Player, secondaryWeapon CLib_Player, handGunWeapon CLib_Player, ""];
+                } else {
+                    CLib_Player addItem _item;
+                };
                 nil
             } count _items;
-            if (getNumber(configFile >> "CfgWeapons" >> _item >> "itemInfo" >> "type") in [101, 201, 301, 302]) then {
-                {
-                    if (_item in (_x call BIS_fnc_compatibleItems)) then {
-                        CLib_Player addWeaponItem [_x, _item];
-                        breakTo "_fnc_addItemMutex";
-                    };
-                    nil
-                } count [primaryWeapon CLib_Player, secondaryWeapon CLib_Player, handGunWeapon CLib_Player];
-            } else {
-                CLib_Player addItem _item;
-            };
-
+            player playAction "putdown";
         }, [_item, cursorObject], "takeItem"] call CFUNC(mutex);
     };
     case ("bag"): {
