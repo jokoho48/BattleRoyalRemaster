@@ -10,10 +10,11 @@ class CfgCLibModules {
             FNC(getWeaponType);
             FNC(init);
         };
-        MODULE(GearSpawn) {
+        MODULE(KitSpawn) {
             dependency[] = {"BBR/Common"};
             FNC(clientInit);
             FNC(createKit);
+            FNC(generate);
             FNC(getWeaponHolder);
             FNC(init);
             FNC(removeKit);

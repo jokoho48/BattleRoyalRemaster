@@ -19,7 +19,7 @@ _building setVariable [QGVAR(isSpawned), true];
 
 private _kits = _building getVariable QGVAR(KitData);
 if (isNil "_kits") then {
-    _kits =_building call FUNC(genereateKits);
+    _kits =_building call FUNC(generateKits);
 };
 private _holders = [];
 
