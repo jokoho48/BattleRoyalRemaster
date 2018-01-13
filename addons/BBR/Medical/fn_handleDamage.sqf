@@ -21,7 +21,7 @@ if (_hitPartIndex >= 0) then {
     private _lastDamage = _unit getHit _selectionName;
     _damageReceived = (_damage - _lastDamage) max 0;
     [_damageReceived] call FUNC(bloodEffect);
-    GVAR(Threshold) = GVAR(Threshold) + (_damageReceived * 5);
+    GVAR(Threshold) = GVAR(Threshold) + (_damageReceived * 4);
 } else {
     _damageReceived = (_damage - damage _unit) max 0;
 };

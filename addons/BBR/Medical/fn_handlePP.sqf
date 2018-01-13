@@ -13,14 +13,15 @@
     Returns:
     None
 */
-#define MAXSUPP 5
-#define BORDER 0.5
+#define MAXSUPP 30
+#define BORDER 8
 if (GVAR(Threshold) >= BORDER) then {
     if (alive CLib_player) then {
         if !(GVAR(PPRunning)) then {
             GVAR(PPRunning) = true;
         };
         private _workValue = (GVAR(Threshold) - BORDER) / (MAXSUPP - BORDER);
+        GVAR(Threshold) = GVAR(Threshold) - (_workValue * 10);
         addCamShake
         [
             (_workValue * 1),        // Power
@@ -41,11 +42,11 @@ if (GVAR(Threshold) >= BORDER) then {
     if (GVAR(PPRunning)) then {
         GVAR(PPRunning) = false;
         GVAR(cc) ppEffectAdjust [1, 1, 0, [0,0,0,0], [1,1,1,1],[1,1,1,0]];
-        GVAR(cc) ppEffectCommit 0;
-
+        GVAR(cc) ppEffectCommit 0.5;
+        GVAR(Threshold) = 0;
         // Blur
         GVAR(blur) ppEffectAdjust [0];
-        GVAR(blur) ppEffectCommit 0.3;
+        GVAR(blur) ppEffectCommit 0.5;
 
         // RBlur
         GVAR(rBlur) ppEffectAdjust [0, 0, 0, 0];

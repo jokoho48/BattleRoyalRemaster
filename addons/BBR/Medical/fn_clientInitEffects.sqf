@@ -15,6 +15,7 @@
 */
 // Hit PP Effects
 GVAR(PPRunning) = false;
+GVAR(Threshold) = 0;
 // Color Correction
 GVAR(cc) = ppEffectCreate ["colorCorrections", 1501];
 GVAR(cc) ppEffectAdjust [1, 1, 0, [0,0,0,0], [1,1,1,1],[1,1,1,0]];

@@ -28,6 +28,7 @@ GVAR(lastDamageSource) = objNull;
 ["Respawn", {
     (_this select 0) params ["_newUnit"];
     _newUnit setVariable [QGVAR(isUnconscious), false, true];
+    GVAR(Threshold) = 0;
 }] call CFUNC(addEventHandler);
 
 // Force Player to stay Prone when "Uncon"
