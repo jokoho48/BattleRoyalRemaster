@@ -6,7 +6,7 @@ class CfgPatches {
         requiredVersion = 1.80;
         author = "joko // Jonas";
         authors[] = {"joko // Jonas"};
-        authorUrl = "";
+        authorUrl = "https://twitter.com/joko48Ger";
         version = VERSION;
         versionStr = QUOTE(VERSION);
         versionAr[] = {VERSION_AR};

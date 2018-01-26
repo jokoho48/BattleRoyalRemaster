@@ -15,7 +15,7 @@ class CfgCLibModules {
             dependency[] = {"BBR/Common"};
             FNC(clientInit);
             FNC(createKit);
-            FNC(generate);
+            FNC(generateKits);
             FNC(getWeaponHolder);
             FNC(init);
             FNC(removeKit);
