@@ -13,8 +13,6 @@
     Returns:
     None
 */
-#define MAXSUPP 30
-#define BORDER 8
 if (GVAR(Threshold) >= BORDER) then {
     if (alive CLib_player) then {
         if !(GVAR(PPRunning)) then {

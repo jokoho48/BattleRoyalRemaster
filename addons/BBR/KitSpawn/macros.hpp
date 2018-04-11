@@ -1,4 +1,4 @@
-#define MODULE GearSpawn
+#define MODULE KitSpawn
 #include "\bbr\BBR\addons\BBR\macros.hpp"
 
 #ifdef ISDEV

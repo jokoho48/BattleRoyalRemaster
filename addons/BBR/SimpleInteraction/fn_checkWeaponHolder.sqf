@@ -41,12 +41,13 @@ if !(_target isKindOf "WeaponHolder" || _target isKindOf "WeaponHolderSimulated"
 } count (weaponCargo _target);
 
 // check for Items
-if !((itemCargo _target) isEqualTo []) exitWith {
-    [itemCargo _target, "item"];
-};
-
 {
     [_x, "magazine"] breakOut SCRIPTSCOPENAME;
     nil
 } count (magazineCargo cursorObject);
+
+if !((itemCargo _target) isEqualTo []) exitWith {
+    [itemCargo _target, "item"];
+};
+
 ["REARM", "rearm"];

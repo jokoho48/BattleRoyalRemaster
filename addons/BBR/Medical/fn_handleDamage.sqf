@@ -13,7 +13,7 @@
     Returns:
     None
 */
-params ["_unit", "_selectionName", "_damage", "_source", "_projectile", "_hitPartIndex", "_instigator"];
+params ["_unit", "_selectionName", "_damage", "", "", "_hitPartIndex", "_instigator"];
 if !((local _unit) && (alive _unit)) exitWith {};
 GVAR(lastDamageSource) = _instigator;
 private _damageReceived = _damage;

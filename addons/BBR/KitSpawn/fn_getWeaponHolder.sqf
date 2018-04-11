@@ -28,7 +28,7 @@ private _holder = objNull;
 } forEach GVAR(weaponHolderData);
 
 if (isNull _holder) then {
-    _holder = createVehicle ["WeaponHolderSimulated_Scripted", [0,0,0], [], 0, "CAN_COLLIDE"];
+    _holder = createVehicle ["GroundWeaponHolder_Scripted ", [0,0,0], [], 0, "CAN_COLLIDE"];
     _holder setPosASL _pos;
     GVAR(weaponHolderData) pushBackUnique _holder;
 } else {

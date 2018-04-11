@@ -33,7 +33,7 @@ GVAR(lastDamageSource) = objNull;
 
 // Force Player to stay Prone when "Uncon"
 ["AnimStateChanged", {
-    (_this select 0) params ["_unit", "_anim"];
+    (_this select 0) params ["_unit"];
     if !((isNull (objectParent _unit)) && (_unit getVariable [QGVAR(isUnconscious), false])) exitWith {};
     if ((stance _unit) in ["CROUCH", "STAND"]) then {
         private _currentWeapon = currentWeapon _unit;
