@@ -17,6 +17,13 @@
 
 ["missionStarted", {
     params ["_display"];
+    GVAR(actionText) = "";
+    addMissionEventHandler ["Draw3D", {
+        if (GVAR(actionText) != "") then {
+            private _pos = positionCameraToWorld [0,0,1];
+            drawIcon3D ["", [1,1,1,1], _pos, 1, 1, 0, format ["F %1", GVAR(actionText)]];
+        };
+    }];
     _display displayAddEventHandler ["KeyDown", {
         scopeName "_fnc_keyDown";
         params ["", "_dik", "", "", ""];
@@ -86,4 +93,4 @@ DFUNC(getDoorSource) = {
 }] call CFUNC(addEventhandler);
 [{
     call FUNC(evaluateAction);
-}, 1.3] call CFUNC(addPerFrameHandler);
+}, 0.2] call CFUNC(addPerFrameHandler);

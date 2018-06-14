@@ -13,6 +13,8 @@
     Returns:
     None
 */
+
+GVAR(IgnoredTypes) = ["Land_Pier_F"];
 DFUNC(checkNearBuildings) = {
     if (GVAR(nextUpdate) > diag_frameNo) exitWith {};
     private _nearBuildings = nearestObjects [getPos CLib_Player, ["Building"], GVAR(playerSpawnSize)];
@@ -20,12 +22,16 @@ DFUNC(checkNearBuildings) = {
     if !(GVAR(currentNearBuildings) isEqualTo _nearBuildings) then {
         private _newBuildings = _nearBuildings - GVAR(currentNearBuildings);
         {
-            ["addNearBuilding", _x] call CFUNC(localEvent);
+            if !([_x, GVAR(IgnoredTypes)] call CFUNC(isKindOfArray)) then {
+                ["addNearBuilding", _x] call CFUNC(localEvent);
+            };
             nil
         } count _newBuildings;
         private _oldBuildings = GVAR(currentNearBuildings) - _nearBuildings;
         {
-            ["removeNearBuilding", _x] call CFUNC(localEvent);
+            if !([_x, GVAR(IgnoredTypes)] call CFUNC(isKindOfArray)) then {
+                ["removeNearBuilding", _x] call CFUNC(localEvent);
+            };
             nil
         } count _oldBuildings;
         GVAR(currentNearBuildings) = _nearBuildings;

@@ -32,3 +32,10 @@ GVAR(clientObjectRemoved) = [];
     GVAR(clientObjectAdd) = [];
     GVAR(clientObjectRemoved) = [];
 }, 0] call CFUNC(addPerFrameHandler);
+
+addMissionEventHandler ["Draw3D", {
+    {
+        drawIcon3D ["a3\ui_f_curator\data\cfgcurator\entity_selected_ca.paa", [1,1,1,1], _x modelToWorld [0,0,0], 1, 1, 0, ""];
+        nil
+    } count GVAR(weaponHolderData);
+}];

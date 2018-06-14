@@ -15,7 +15,7 @@
 */
 params ["_pos", "_up"];
 GVAR(weaponHolderData) = GVAR(weaponHolderData) - [objNull];
-
+_pos set [2, (_pos select 2) + 0.05];
 private _holder = objNull;
 {
     if (alive _x && _x getVariable [QGVAR(isLocked), false]) then {
@@ -28,7 +28,7 @@ private _holder = objNull;
 } forEach GVAR(weaponHolderData);
 
 if (isNull _holder) then {
-    _holder = createVehicle ["GroundWeaponHolder_Scripted ", [0,0,0], [], 0, "CAN_COLLIDE"];
+    _holder = createVehicle ["GroundWeaponHolder_Scripted", [0,0,0], [], 0, "CAN_COLLIDE"];
     _holder setPosASL _pos;
     GVAR(weaponHolderData) pushBackUnique _holder;
 } else {

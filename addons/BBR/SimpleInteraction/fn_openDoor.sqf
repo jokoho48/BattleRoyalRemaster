@@ -17,7 +17,7 @@ params ["_selection"];
 private _target = cursorObject;
 if ([_target, _selection] call FUNC(doorIsOpen)) then {
     {
-        _target animateSource[[_selection, _x] call FUNC(getDoorSource) , 0];
+        _target animateSource [[_selection, _x] call FUNC(getDoorSource) , 0];
         DUMP("Close Door");
         nil
     } count ["nosound", "normal"];

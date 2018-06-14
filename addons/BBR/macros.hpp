@@ -21,15 +21,6 @@
 
 #include "\tc\CLib\addons\CLib\macros.hpp"
 
-#ifdef ISDEV
-    #define RUNTIMESTART private _debugStartTime = diag_tickTime
-    #define RUNTIME(var) DUMP(var + " Needed: " + ((diag_tickTime - _debugStartTime) call CFUNC(toFixedNumber)) + " ms")
-
-#else
-    #define RUNTIMESTART /*Disabled*/
-    #define RUNTIME(var) /*Disabled*/
-#endif
-
 #define MFUNC(var) EFUNC(Common,var)
 #define QMFUNC(var) QEFUNC(Common,var)
 #define MGVAR(var) EGVAR(Common,var)

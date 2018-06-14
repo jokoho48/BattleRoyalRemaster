@@ -16,6 +16,7 @@ class CfgCLibModules {
             FNC(clientInit);
             FNC(createKit);
             FNC(generateKits);
+            FNC(getKit);
             FNC(getWeaponHolder);
             FNC(init);
             FNC(removeKit);
